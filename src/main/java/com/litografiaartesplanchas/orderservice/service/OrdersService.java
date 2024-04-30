@@ -26,17 +26,22 @@ public class OrdersService {
         return ordersRepository.findAll();
     }
 
-    public Orders createOrder(Orders order) {
-        Client client = clientRepository.findById(order.getClient().getId())
-                .orElseThrow(() -> new RuntimeException("Client not found with ID: " + order.getClient().getId()));
-
-        Services services = serviceRepository.findById(order.getService().getId())
-                .orElseThrow(() -> new RuntimeException("Service not found with ID: " + order.getService().getId()));
-
-        order.setClient(client);
-        order.setService(services);
-
-        return ordersRepository.save(order);
+    public Orders createOrder(Orders order) throws Exception {
+        try {
+            Client client = clientRepository.findById(order.getClient().getId())
+                    .orElseThrow(() -> new RuntimeException("Client not found with ID: " + order.getClient().getId()));
+    
+            Services services = serviceRepository.findById(order.getService().getId())
+                    .orElseThrow(() -> new RuntimeException("Service not found with ID: " + order.getService().getId()));
+    
+            order.setClient(client);
+            order.setService(services);
+    
+            return ordersRepository.save(order);
+        } catch (Exception e) {
+            throw new Exception("Error occurred while creating order: " + e.getMessage());
+        }
     }
+    
 
 }

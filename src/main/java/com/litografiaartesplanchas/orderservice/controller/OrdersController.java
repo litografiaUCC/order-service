@@ -24,7 +24,7 @@ public class OrdersController {
     @GetMapping("/")
     public ResponseEntity<?> getAllOrders() {
     try {
-        List<Orders> orders = ordersService.getAll(); // Asumiendo que tienes un método en OrdersService para obtener todos los pedidos
+        List<Orders> orders = ordersService.getAll(); 
         if (orders.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -34,14 +34,16 @@ public class OrdersController {
     }
 }
 
-    @PostMapping("/create")
-    public ResponseEntity<Object> createOrder(@RequestBody Orders order) {
-        try {
-            ordersService.createOrder(order);
-            return ResponseEntity.status(HttpStatus.OK).body("Order created successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error creating order: " + e.getMessage());
-        }
+@PostMapping("/create")
+public ResponseEntity<?> createOrder(@RequestBody Orders order) {
+    try {
+        ordersService.createOrder(order);
+        return ResponseEntity.ok().body("{\"status\": 200, \"message\": \"Order created successfully\"}");
+    } catch (Exception e) {
+        e.printStackTrace(); 
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400, \"message\": \"" + e.getMessage() + "\"}");
     }
+}
+
 
 }
