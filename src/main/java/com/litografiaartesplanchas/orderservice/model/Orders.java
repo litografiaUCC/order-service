@@ -26,7 +26,7 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "id_servicio")
-    private Service service;
+    private Services service;
 
     @Column(name = "fecha")
     private Timestamp date;
@@ -56,11 +56,11 @@ public class Orders {
         this.client = client;
     }
 
-    public Service getService() {
+    public Services getService() {
         return service;
     }
 
-    public void setService(Service service) {
+    public void setService(Services service) {
         this.service = service;
     }
 
