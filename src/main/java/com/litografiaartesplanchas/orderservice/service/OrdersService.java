@@ -1,5 +1,7 @@
 package com.litografiaartesplanchas.orderservice.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,10 @@ public class OrdersService {
     private ClientRepository clientRepository;
     @Autowired
     private ServicesRepository serviceRepository;
+
+    public List<Orders> getAll() {
+        return ordersRepository.findAll();
+    }
 
     public Orders createOrder(Orders order) {
         Client client = clientRepository.findById(order.getClient().getId())
