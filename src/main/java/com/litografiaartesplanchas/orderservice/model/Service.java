@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -32,6 +33,7 @@ public class Service {
 	@Column(name = "foto", nullable = true, length = 255)
 	private String picture;
 
+    @ManyToOne
     @JoinColumn(name = "id_tipo_servicio", nullable = false)
 	private TypeService typeService;
 
