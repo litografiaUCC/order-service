@@ -52,7 +52,7 @@ public class Client {
 	private TypeDocument typeDocument;
 
     @OneToMany(mappedBy = "client")
-    private List<Orders> orders;
+    private List<Order> order;
 
 	public int getId() {
 		return id;

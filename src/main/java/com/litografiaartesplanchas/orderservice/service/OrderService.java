@@ -6,38 +6,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.litografiaartesplanchas.orderservice.model.Client;
-import com.litografiaartesplanchas.orderservice.model.Orders;
-import com.litografiaartesplanchas.orderservice.model.Services;
+import com.litografiaartesplanchas.orderservice.model.Order;
+import com.litografiaartesplanchas.orderservice.model.ServiceModule;
 import com.litografiaartesplanchas.orderservice.repository.ClientRepository;
-import com.litografiaartesplanchas.orderservice.repository.OrdersRepository;
-import com.litografiaartesplanchas.orderservice.repository.ServicesRepository;
+import com.litografiaartesplanchas.orderservice.repository.OrderRepository;
+import com.litografiaartesplanchas.orderservice.repository.ServiceRepository;
 
 @Service
-public class OrdersService {
+public class OrderService {
 
     @Autowired
-    private OrdersRepository ordersRepository;
+    private OrderRepository orderRepository;
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
-    private ServicesRepository serviceRepository;
+    private ServiceRepository serviceRepository;
 
-    public List<Orders> getAll() {
-        return ordersRepository.findAll();
+    public List<Order> getAll() {
+        return orderRepository.findAll();
     }
 
-    public Orders createOrder(Orders order) throws Exception {
+    public Order createOrder(Order order) throws Exception {
         try {
             Client client = clientRepository.findById(order.getClient().getId())
                     .orElseThrow(() -> new RuntimeException("Client not found with ID: " + order.getClient().getId()));
     
-            Services services = serviceRepository.findById(order.getService().getId())
+            ServiceModule services = serviceRepository.findById(order.getService().getId())
                     .orElseThrow(() -> new RuntimeException("Service not found with ID: " + order.getService().getId()));
     
             order.setClient(client);
             order.setService(services);
     
-            return ordersRepository.save(order);
+            return orderRepository.save(order);
         } catch (Exception e) {
             throw new Exception("Error occurred while creating order: " + e.getMessage());
         }

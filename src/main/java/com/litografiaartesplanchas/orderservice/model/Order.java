@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pedido")
-public class Orders {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pedido")
@@ -26,7 +26,7 @@ public class Orders {
 
     @ManyToOne
     @JoinColumn(name = "id_servicio")
-    private Services service;
+    private ServiceModule service;
 
     @Column(name = "fecha")
     private Timestamp date;
@@ -56,11 +56,11 @@ public class Orders {
         this.client = client;
     }
 
-    public Services getService() {
+    public ServiceModule getService() {
         return service;
     }
 
-    public void setService(Services service) {
+    public void setService(ServiceModule service) {
         this.service = service;
     }
 

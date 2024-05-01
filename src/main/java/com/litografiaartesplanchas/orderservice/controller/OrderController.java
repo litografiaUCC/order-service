@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.litografiaartesplanchas.orderservice.model.Orders;
-import com.litografiaartesplanchas.orderservice.service.OrdersService;
+import com.litografiaartesplanchas.orderservice.model.Order;
+import com.litografiaartesplanchas.orderservice.service.OrderService;
 
 @RestController
 @RequestMapping("/api/v1/orders")
-public class OrdersController {
+public class OrderController {
 
     @Autowired
-    private OrdersService ordersService;
+    private OrderService orderService;
 
     @GetMapping("/")
     public ResponseEntity<?> getAllOrders() {
     try {
-        List<Orders> orders = ordersService.getAll(); 
+        List<Order> orders = orderService.getAll(); 
         if (orders.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -35,9 +35,9 @@ public class OrdersController {
 }
 
 @PostMapping("/create")
-public ResponseEntity<?> createOrder(@RequestBody Orders order) {
+public ResponseEntity<?> createOrder(@RequestBody Order order) {
     try {
-        ordersService.createOrder(order);
+        orderService.createOrder(order);
         return ResponseEntity.ok().body("{\"status\": 200, \"message\": \"Order created successfully\"}");
     } catch (Exception e) {
         e.printStackTrace(); 
