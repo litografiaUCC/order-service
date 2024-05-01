@@ -33,6 +33,19 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400,\"message\": \"Something Went Wrong\"}");
     }
 }
+@GetMapping("/approved")
+    public ResponseEntity<?> getApprovedOrders() {
+        try {
+            List<Order> approvedOrders = orderService.getApprovedOrders(); 
+            if (approvedOrders.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(approvedOrders);
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400,\"message\": \"Error occurred while fetching approved orders: " + e.getMessage() + "\"}");
+        }
+    }
+
 
 @PostMapping("/create")
 public ResponseEntity<?> createOrder(@RequestBody Order order) {

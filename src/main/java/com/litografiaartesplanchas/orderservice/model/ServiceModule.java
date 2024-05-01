@@ -2,6 +2,7 @@ package com.litografiaartesplanchas.orderservice.model;
 
 
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -39,6 +42,14 @@ public class ServiceModule {
 
     @OneToMany(mappedBy = "service")
     private List<Order> orders;
+
+    @JoinTable(
+	        name = "servicio_has_empleado",
+	        joinColumns = @JoinColumn(name = "id_servicio", nullable = false),
+	        inverseJoinColumns = @JoinColumn(name="id_empleado", nullable = false)
+	 )
+	 @ManyToMany()
+	 private Set<Employee> employees;
 
     public int getId() {
         return id;
@@ -88,7 +99,13 @@ public class ServiceModule {
         this.typeService = typeService;
     }
 
-    
-    
+    public Set<Employee> getEmployees() {
+		return employees;
+	}
+
+	public void setEmployees(Set<Employee> employees) {
+		this.employees = employees;
+	}
+
 
 }
