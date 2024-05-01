@@ -26,6 +26,15 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> getApprovedOrders() {
+        List<Order> approvedOrders = orderRepository.findByApproval(true);
+        if (approvedOrders.isEmpty()) {
+            throw new RuntimeException("No approved orders found.");
+        }
+        return approvedOrders;
+    }
+
+
     public Order createOrder(Order order) throws Exception {
         try {
             Client client = clientRepository.findById(order.getClient().getId())
