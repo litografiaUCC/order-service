@@ -38,7 +38,7 @@ public class ServiceModule {
 	private TypeService typeService;
 
     @OneToMany(mappedBy = "service")
-    private List<Order> order;
+    private List<Order> orders;
 
     public int getId() {
         return id;
