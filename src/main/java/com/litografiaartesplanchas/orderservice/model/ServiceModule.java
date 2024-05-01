@@ -15,7 +15,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "servicio")
-public class Service {
+public class ServiceModule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_servicio")
@@ -38,7 +38,7 @@ public class Service {
 	private TypeService typeService;
 
     @OneToMany(mappedBy = "service")
-    private List<Orders> orders;
+    private List<Order> orders;
 
     public int getId() {
         return id;

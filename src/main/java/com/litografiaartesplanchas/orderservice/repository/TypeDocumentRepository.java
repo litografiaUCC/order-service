@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.litografiaartesplanchas.orderservice.model.TypeDocument;
 
 @Repository
-public interface TypeDocumentRepository extends JpaRepository<TypeDocument, Long>{
+public interface TypeDocumentRepository extends JpaRepository<TypeDocument, Integer>{
 
 }
