@@ -27,6 +27,15 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public Optional<Order> getOrderById(Integer orderId) throws Exception {
+        try {
+            Optional<Order> optionalOrder = orderRepository.findById(orderId);
+            return optionalOrder;
+        } catch (Exception e) {
+            throw new Exception("Error occurred while finding order: " + orderId + ": "+ e.getMessage());
+        }
+    }
+
     public List<Order> getApprovedOrders() {
         List<Order> approvedOrders = orderRepository.findByApproval(true);
         if (approvedOrders.isEmpty()) {
