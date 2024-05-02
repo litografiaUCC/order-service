@@ -1,6 +1,7 @@
 package com.litografiaartesplanchas.orderservice.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,23 @@ public class OrderService {
             return orderRepository.save(order);
         } catch (Exception e) {
             throw new Exception("Error occurred while creating order: " + e.getMessage());
+        }
+    }
+
+    public void approveOrder(int orderId) throws Exception {
+        try {
+            Optional<Order> optionalOrder = orderRepository.findById(orderId);
+            if (optionalOrder.isEmpty()) {
+                throw new Exception("Order not found with ID: " + orderId);
+            }
+            Order order = optionalOrder.get();
+            if (Boolean.TRUE.equals(order.isApproval())) {
+                throw new Exception("Order is already approved.");
+            }
+            order.setApproval(true);
+            orderRepository.save(order);
+        } catch (Exception e) {
+            throw new Exception("Error occurred while approving order: " + e.getMessage());
         }
     }
     
