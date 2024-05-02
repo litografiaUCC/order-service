@@ -46,15 +46,15 @@ public class OrderController {
         }
     }
     @GetMapping("toapprove")
-    public ResponseEntity<?> getnotApprovedOrder() {
+    public ResponseEntity<?> getNotApprovedOrder() {
         try {
-            List<Order> notapprovedOrders = orderService.getnotApprovedOrders();
-            if (notapprovedOrders.isEmpty()) {
+            List<Order> notApprovedOrders = orderService.getNotApprovedOrders();
+            if (notApprovedOrders.isEmpty()) {
                 return ResponseEntity.noContent().build();
             }
-            return ResponseEntity.ok(notapprovedOrders);
+            return ResponseEntity.ok(notApprovedOrders);
         } catch(Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400,\"message\": \"Error occurred while fetching notapproved orders: " + e.getMessage() + "\"}");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400,\"message\": \"Error occurred while fetching toapprove orders: " + e.getMessage() + "\"}");
         }
     }
     
