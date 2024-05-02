@@ -34,8 +34,8 @@ public class Order {
     @Column(name = "estado")
     private int status;
 
-    @Column(name = "aprobacion", columnDefinition = "BOOLEAN DEFAULT FALSE")
-    private boolean approval;
+    @Column(name = "aprobacion")
+    private Boolean approval;
 
     @Column(name = "pago")
     private int payment;
@@ -80,11 +80,11 @@ public class Order {
         this.status = status;
     }
 
-    public boolean isApproval() {
+    public Boolean isApproval() {
         return approval;
     }
 
-    public void setApproval(boolean approval) {
+    public void setApproval(Boolean approval) {
         this.approval = approval;
     }
 
@@ -96,10 +96,5 @@ public class Order {
         this.payment = payment;
     }
 
-
-
-
-
-    
 
 }

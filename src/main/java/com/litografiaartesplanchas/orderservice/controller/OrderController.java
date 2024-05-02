@@ -33,7 +33,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400,\"message\": \"Something Went Wrong\"}");
     }
 }
-@GetMapping("/approved")
+    @GetMapping("/approved")
     public ResponseEntity<?> getApprovedOrders() {
         try {
             List<Order> approvedOrders = orderService.getApprovedOrders(); 
@@ -45,18 +45,32 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400,\"message\": \"Error occurred while fetching approved orders: " + e.getMessage() + "\"}");
         }
     }
-
-
-@PostMapping("/create")
-public ResponseEntity<?> createOrder(@RequestBody Order order) {
-    try {
-        orderService.createOrder(order);
-        return ResponseEntity.ok().body("{\"status\": 200, \"message\": \"Order created successfully\"}");
-    } catch (Exception e) {
-        e.printStackTrace(); 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400, \"message\": \"" + e.getMessage() + "\"}");
+    @GetMapping("toapprove")
+    public ResponseEntity<?> getNotApprovedOrder() {
+        try {
+            List<Order> notApprovedOrders = orderService.getNotApprovedOrders();
+            if (notApprovedOrders.isEmpty()) {
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.ok(notApprovedOrders);
+        } catch(Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400,\"message\": \"Error occurred while fetching toapprove orders: " + e.getMessage() + "\"}");
+        }
     }
-}
+    
+
+
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createOrder(@RequestBody Order order) {
+        try {
+            orderService.createOrder(order);
+            return ResponseEntity.ok().body("{\"status\": 200, \"message\": \"Order created successfully\"}");
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400, \"message\": \"" + e.getMessage() + "\"}");
+        }
+    }
 
 
 }

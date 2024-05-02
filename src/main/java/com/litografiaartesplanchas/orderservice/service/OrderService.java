@@ -34,6 +34,14 @@ public class OrderService {
         return approvedOrders;
     }
 
+    public List<Order> getNotApprovedOrders() {
+        List<Order> notApprovedOrders = orderRepository.findByApproval(null);
+        if (notApprovedOrders.isEmpty()) {
+            throw new RuntimeException("No orders to approve");
+        }
+        return notApprovedOrders;
+    }
+
 
     public Order createOrder(Order order) throws Exception {
         try {
