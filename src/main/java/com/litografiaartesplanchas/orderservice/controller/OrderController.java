@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +62,6 @@ public class OrderController {
     
 
 
-
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(@RequestBody Order order) {
         try {
@@ -71,6 +72,24 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400, \"message\": \"" + e.getMessage() + "\"}");
         }
     }
+
+    @PatchMapping("/{id}/approve")
+    public ResponseEntity<?> approveOrder(@PathVariable int id) {
+    try {
+        orderService.approveOrder(id);
+        return ResponseEntity.ok("{\"status\": 200, \"message\": \"ok\"}");
+    } catch (Exception e) {
+        if (e.getMessage().contains("Order not found")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"status\": 404, \"message\": \"Order not found\"}");
+        } else if (e.getMessage().contains("Order is already approved")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("{\"status\": 409, \"message\": \"Order is already approved\"}");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400, \"message\": \"" + e.getMessage() + "\"}");
+    }
+}
+
+
+
 
 
 }
