@@ -1,6 +1,7 @@
 package com.litografiaartesplanchas.orderservice.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,22 @@ public class OrderController {
     } catch(Exception e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400,\"message\": \"Something Went Wrong\"}");
     }
+
+    
 }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable Integer id) {
+        try {
+            Optional<Order> optionalOrder = orderService.getOrderById(id);
+            if (optionalOrder.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"status\": 404, \"message\": \"Order not found\"}");
+            }
+            return ResponseEntity.ok(optionalOrder.get());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400, \"message\": \"" + e.getMessage() + "\"}");
+        }
+    }
+    
     @GetMapping("/approved")
     public ResponseEntity<?> getApprovedOrders() {
         try {
@@ -47,6 +63,7 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400,\"message\": \"Error occurred while fetching approved orders: " + e.getMessage() + "\"}");
         }
     }
+
     @GetMapping("toapprove")
     public ResponseEntity<?> getNotApprovedOrder() {
         try {
