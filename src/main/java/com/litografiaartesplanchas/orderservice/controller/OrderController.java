@@ -88,6 +88,21 @@ public class OrderController {
     }
 }
 
+    @PatchMapping("/{id}/disapprove")
+    public ResponseEntity<?> disapproveOrder(@PathVariable int id) {
+        try {
+            orderService.disapproveOrder(id);
+            return ResponseEntity.ok("{\"status\": 200, \"message\": \"ok\"}");
+        } catch (Exception e) {
+            if (e.getMessage().contains("Order not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"status\": 404, \"message\": \"Order not found\"}");
+            } else if (e.getMessage().contains("Order is already disapproved")) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("{\"status\": 409, \"message\": \"Order is already disapproved\"}");
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400, \"message\": \"" + e.getMessage() + "\"}");
+        }
+}
+
 
 
 

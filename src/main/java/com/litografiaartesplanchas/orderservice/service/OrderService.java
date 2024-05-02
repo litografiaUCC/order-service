@@ -77,6 +77,23 @@ public class OrderService {
             throw new Exception("Error occurred while approving order: " + e.getMessage());
         }
     }
+
+    public void disapproveOrder(int orderId) throws Exception {
+        try {
+            Optional<Order> optionalOrder = orderRepository.findById(orderId);
+            if (optionalOrder.isEmpty()) {
+                throw new Exception("Order not found with ID: " + orderId);
+            }
+            Order order = optionalOrder.get();
+            if (Boolean.FALSE.equals(order.isApproval())) {
+                throw new Exception("Order is already disapproved.");
+            }
+            order.setApproval(false);
+            orderRepository.save(order);
+        } catch (Exception e) {
+            throw new Exception("Error occurred while disapproving order: " + e.getMessage());
+        }
+    }
     
 
 }
