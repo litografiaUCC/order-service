@@ -103,6 +103,21 @@ public class OrderService {
             throw new Exception("Error occurred while disapproving order: " + e.getMessage());
         }
     }
-    
 
+    public List<Order> getOrdersByClientId(int clientId) throws Exception {
+        try {
+            Optional<Client> optionalClient = clientRepository.findById(clientId);
+            if (optionalClient.isEmpty()) {
+                throw new Exception("Client not found");
+            }
+            Client client = optionalClient.get();
+            List<Order> orders = orderRepository.findByClient(client);
+            if (orders.isEmpty()) {
+                throw new Exception("Client has no orders");
+            }
+            return orders;
+        } catch (Exception e) {
+            throw new Exception("Error occurred while finding client: " + e.getMessage());
+        }
+    }
 }
