@@ -123,8 +123,9 @@ public class OrderController {
     @GetMapping("/client/{id}")
     public ResponseEntity<?> getOrdersByClientId(@PathVariable int id) {
         try {
-            return orderService.getOrdersByClientId(id);
-        } catch(Exception e) {
+            List<Order> orders = orderService.getOrdersByClientId(id);
+            return ResponseEntity.ok(orders);
+        } catch (Exception e) {
             if (e.getMessage().contains("Client not found")) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"status\": 404, \"message\": \"Client not found\"}");
             } else if (e.getMessage().contains("Client has no orders")) {

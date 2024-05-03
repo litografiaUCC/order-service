@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.litografiaartesplanchas.orderservice.model.Client;
@@ -105,7 +104,7 @@ public class OrderService {
         }
     }
 
-    public ResponseEntity<?> getOrdersByClientId(int clientId) throws Exception {
+    public List<Order> getOrdersByClientId(int clientId) throws Exception {
         try {
             Optional<Client> optionalClient = clientRepository.findById(clientId);
             if (optionalClient.isEmpty()) {
@@ -116,10 +115,9 @@ public class OrderService {
             if (orders.isEmpty()) {
                 throw new Exception("Client has no orders");
             }
-            return ResponseEntity.ok(orders);
+            return orders;
         } catch (Exception e) {
             throw new Exception("Error occurred while finding client: " + e.getMessage());
-    }
-    
+        }
     }
 }
