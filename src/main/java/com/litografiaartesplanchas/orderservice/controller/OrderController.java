@@ -120,8 +120,19 @@ public class OrderController {
         }
 }
 
-
-
+    @GetMapping("/client/{id}")
+    public ResponseEntity<?> getOrdersByClientId(@PathVariable int id) {
+        try {
+            return orderService.getOrdersByClientId(id);
+        } catch(Exception e) {
+            if (e.getMessage().contains("Client not found")) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"status\": 404, \"message\": \"Client not found\"}");
+            } else if (e.getMessage().contains("Client has no orders")) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"status\": 400,\"message\": \"" + e.getMessage() + "\"}");
+        }
+    }
 
 
 }
