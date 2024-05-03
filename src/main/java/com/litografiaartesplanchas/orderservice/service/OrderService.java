@@ -109,7 +109,7 @@ public class OrderService {
         try {
             Optional<Client> optionalClient = clientRepository.findById(clientId);
             if (optionalClient.isEmpty()) {
-                throw new Exception("Client not found with ID: " + clientId);
+                throw new Exception("Client not found");
             }
             Client client = optionalClient.get();
             List<Order> orders = orderRepository.findByClient(client);
