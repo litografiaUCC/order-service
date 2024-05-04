@@ -120,4 +120,21 @@ public class OrderService {
             throw new Exception("Error occurred while finding client: " + e.getMessage());
         }
     }
+
+    public void updateStatus(int orderId, int status) throws Exception {
+        try {
+            Optional<Order> optionalOrder = orderRepository.findById(orderId);
+            if (optionalOrder.isEmpty()) {
+                throw new Exception("Order not found with ID");
+            }
+            Order order = optionalOrder.get();
+            if (!Boolean.TRUE.equals(order.isApproval())) {
+                throw new Exception("Order is not approved");
+            }
+            order.setStatus(status);
+            orderRepository.save(order);
+        } catch (Exception e) {
+            throw new Exception("Error occurred while updating order status: " + e.getMessage());
+        }
+    }
 }
