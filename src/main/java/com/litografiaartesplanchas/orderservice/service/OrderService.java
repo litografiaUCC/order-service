@@ -38,17 +38,11 @@ public class OrderService {
 
     public List<Order> getApprovedOrders() {
         List<Order> approvedOrders = orderRepository.findByApproval(true);
-        if (approvedOrders.isEmpty()) {
-            throw new RuntimeException("No approved orders found.");
-        }
         return approvedOrders;
     }
 
     public List<Order> getNotApprovedOrders() {
         List<Order> notApprovedOrders = orderRepository.findByApproval(null);
-        if (notApprovedOrders.isEmpty()) {
-            throw new RuntimeException("No orders to approve");
-        }
         return notApprovedOrders;
     }
 
