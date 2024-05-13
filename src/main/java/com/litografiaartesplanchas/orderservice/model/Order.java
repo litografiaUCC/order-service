@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "pedido")
@@ -28,7 +30,9 @@ public class Order {
     @JoinColumn(name = "id_servicio")
     private ServiceModule service;
 
-    @Column(name = "fecha")
+    
+    @Column(name = "fecha", insertable= true, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp date;
 
     @Column(name = "estado")

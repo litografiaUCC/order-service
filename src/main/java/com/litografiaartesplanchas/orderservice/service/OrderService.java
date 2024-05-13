@@ -1,5 +1,6 @@
 package com.litografiaartesplanchas.orderservice.service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,7 @@ public class OrderService {
             ServiceModule services = serviceRepository.findById(order.getService().getId())
                     .orElseThrow(() -> new RuntimeException("Service not found with ID: " + order.getService().getId()));
     
+            order.setDate(new Timestamp(System.currentTimeMillis()));
             order.setClient(client);
             order.setService(services);
     
